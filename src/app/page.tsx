@@ -4,7 +4,6 @@ import FeaturedProperties from '@/components/FeaturedProperties'
 import WhyChooseUs from '@/components/WhyChooseUs'
 import Testimonials from '@/components/Testimonials'
 import ContactSection from '@/components/ContactSection'
-import MortgageCalculator from '@/components/MortgageCalculator'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -15,7 +14,6 @@ export default function Home() {
       <Hero />
       <AdvancedPropertySearch />
       <FeaturedProperties />
-      <MortgageCalculator />
       <WhyChooseUs />
       <Testimonials />
       <ContactSection />
