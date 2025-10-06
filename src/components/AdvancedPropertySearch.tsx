@@ -3,6 +3,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Search, MapPin, Home, DollarSign, Filter, X, SlidersHorizontal, Map } from 'lucide-react'
 import PropertyMap from './PropertyMap'
+import ModernPropertyFilters from './ModernPropertyFilters'
+import ModernSearchSuggestions from './ModernSearchSuggestions'
+import ModernLoadingStates from './ModernLoadingStates'
+import { motion } from 'framer-motion'
 
 interface Property {
   id: number
@@ -141,6 +145,8 @@ export default function AdvancedPropertySearch() {
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid')
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
   const [searchResults, setSearchResults] = useState<Property[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [showSuggestions, setShowSuggestions] = useState(false)
 
   // Real-time filtering
   const filteredProperties = useMemo(() => {

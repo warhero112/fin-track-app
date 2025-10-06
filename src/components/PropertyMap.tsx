@@ -7,16 +7,35 @@ interface Property {
   id: number
   title: string
   location: string
+  ward: string
+  city: string
   price: number
   priceType: 'rent' | 'sale'
   coordinates: [number, number]
   image: string
+  images: string[]
   bedrooms: number
   bathrooms: number
   area: number
   rating: number
   features: string[]
   available: boolean
+  isFavorite: boolean
+  description: string
+  agent: {
+    name: string
+    phone: string
+    email: string
+    avatar: string
+  }
+  layout: string
+  nearest_station: string
+  walk_time_minutes: number
+  property_type: string
+  furnished: boolean
+  pets_allowed: boolean
+  has_balcony: boolean
+  availability_status: 'available' | 'pending' | 'rented'
 }
 
 interface PropertyMapProps {

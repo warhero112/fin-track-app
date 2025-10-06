@@ -1,5 +1,5 @@
 import Hero from '@/components/Hero'
-import AdvancedPropertySearch from '@/components/AdvancedPropertySearch'
+import ModernPropertySearch from '@/components/ModernPropertySearch'
 import FeaturedProperties from '@/components/FeaturedProperties'
 import WhyChooseUs from '@/components/WhyChooseUs'
 import Testimonials from '@/components/Testimonials'
@@ -12,7 +12,7 @@ export default function Home() {
     <main className="min-h-screen">
       <Header />
       <Hero />
-      <AdvancedPropertySearch />
+      <ModernPropertySearch />
       <FeaturedProperties />
       <WhyChooseUs />
       <Testimonials />
