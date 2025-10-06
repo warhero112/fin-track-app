@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { UserProvider } from '@/contexts/UserContext'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -34,9 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${notoSansJP.variable}`}>
       <body className="font-sans antialiased">
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
+        <UserProvider>
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
+        </UserProvider>
       </body>
     </html>
   )

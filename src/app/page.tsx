@@ -1,9 +1,10 @@
 import Hero from '@/components/Hero'
-import PropertySearch from '@/components/PropertySearch'
+import AdvancedPropertySearch from '@/components/AdvancedPropertySearch'
 import FeaturedProperties from '@/components/FeaturedProperties'
 import WhyChooseUs from '@/components/WhyChooseUs'
 import Testimonials from '@/components/Testimonials'
 import ContactSection from '@/components/ContactSection'
+import MortgageCalculator from '@/components/MortgageCalculator'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -12,8 +13,9 @@ export default function Home() {
     <main className="min-h-screen">
       <Header />
       <Hero />
-      <PropertySearch />
+      <AdvancedPropertySearch />
       <FeaturedProperties />
+      <MortgageCalculator />
       <WhyChooseUs />
       <Testimonials />
       <ContactSection />

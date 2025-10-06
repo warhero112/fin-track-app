@@ -2,12 +2,17 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Globe, Phone, Mail } from 'lucide-react'
+import { Menu, X, Globe, Phone, Mail, User, LogOut, Heart, GitCompare } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useUser } from '@/contexts/UserContext'
+import AuthModal from './AuthModal'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [showUserMenu, setShowUserMenu] = useState(false)
   const { language, setLanguage, t } = useLanguage()
+  const { user, isLoggedIn, logout } = useUser()
 
   const navigation = [
     { name: t('nav.home'), href: '/' },
@@ -54,7 +59,56 @@ export default function Header() {
                 <span>{t('contact.email')}</span>
               </div>
             </div>
-            <button className="btn-primary">
+            
+            {/* User Menu */}
+            {isLoggedIn ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200"
+                >
+                  <img
+                    src={user?.avatar || '/default-avatar.png'}
+                    alt={user?.name}
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="text-sm font-medium">{user?.name}</span>
+                </button>
+                
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <div className="text-sm font-medium text-gray-900">{user?.name}</div>
+                      <div className="text-xs text-gray-500">{user?.email}</div>
+                    </div>
+                    <Link href="/favorites" className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                      <Heart className="w-4 h-4" />
+                      <span>Favorites ({user?.favoriteProperties.length || 0})</span>
+                    </Link>
+                    <Link href="/comparison" className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                      <GitCompare className="w-4 h-4" />
+                      <span>Compare ({user?.comparisonList.length || 0})</span>
+                    </Link>
+                    <button
+                      onClick={logout}
+                      className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => setShowAuthModal(true)}
+                className="btn-primary"
+              >
+                Sign In
+              </button>
+            )}
+            
+            <button className="btn-secondary">
               {t('get.consultation')}
             </button>
             <div className="flex items-center space-x-1">
@@ -141,6 +195,12 @@ export default function Header() {
           </div>
         )}
       </div>
+      
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
     </header>
   )
 }
