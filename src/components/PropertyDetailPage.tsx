@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@/contexts/UserContext'
 import { useLanguage } from '@/contexts/LanguageContext'
+import propertyService from '@/services/PropertyService'
 
 interface Property {
   id: string
@@ -65,7 +66,7 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
 
   useEffect(() => {
     if (user && property) {
-      const saved = user.savedProperties?.includes(parseInt(property.id)) || false
+      const saved = user.savedProperties?.includes(property.id) || false
       setIsSaved(saved)
     }
   }, [user, property])
@@ -79,7 +80,7 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
 
     setIsLoading(true)
     try {
-      await toggleSavedProperty(parseInt(property.id))
+      await toggleSavedProperty(property.id)
       setIsSaved(!isSaved)
     } catch (error) {
       console.error('Error saving property:', error)

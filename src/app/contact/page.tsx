@@ -1,4 +1,4 @@
-import ContactPage from '@/components/ContactPage'
+import WorkingContactForm from '@/components/WorkingContactForm'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -11,7 +11,7 @@ export default function ContactPageRoute() {
   return (
     <main className="min-h-screen">
       <Header />
-      <ContactPage />
+      <WorkingContactForm />
       <Footer />
     </main>
   )

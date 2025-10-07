@@ -8,15 +8,16 @@ interface User {
   email: string
   phone?: string
   avatar?: string
+  role?: 'user' | 'admin'
   preferences: {
     language: 'en' | 'ja'
     currency: 'JPY' | 'USD'
     notifications: boolean
     savedSearches: boolean
   }
-  savedProperties: number[]
-  comparisonList: number[]
-  favoriteProperties: number[]
+  savedProperties: string[]
+  comparisonList: string[]
+  favoriteProperties: string[]
   searchHistory: string[]
 }
 
@@ -27,14 +28,14 @@ interface UserContextType {
   register: (userData: Partial<User>) => Promise<boolean>
   logout: () => void
   updateUser: (updates: Partial<User>) => void
-  addToFavorites: (propertyId: number) => void
-  removeFromFavorites: (propertyId: number) => void
-  addToComparison: (propertyId: number) => void
-  removeFromComparison: (propertyId: number) => void
+  addToFavorites: (propertyId: string) => void
+  removeFromFavorites: (propertyId: string) => void
+  addToComparison: (propertyId: string) => void
+  removeFromComparison: (propertyId: string) => void
   clearComparison: () => void
   saveSearch: (searchParams: any) => void
   getSavedSearches: () => any[]
-  toggleSavedProperty: (propertyId: number) => Promise<void>
+  toggleSavedProperty: (propertyId: string) => Promise<void>
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
@@ -51,9 +52,9 @@ const mockUser: User = {
     notifications: true,
     savedSearches: true
   },
-  savedProperties: [1, 3],
-  comparisonList: [2, 4],
-  favoriteProperties: [1, 2, 3],
+  savedProperties: ['1', '3'],
+  comparisonList: ['2', '4'],
+  favoriteProperties: ['1', '2', '3'],
   searchHistory: ['Shibuya apartments', '2LDK under 200k', 'Pet friendly properties']
 }
 
@@ -80,10 +81,20 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, [user])
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Mock login - in production, this would make an API call
-    if (email === 'demo@rentora.jp' && password === 'demo123') {
-      setUser(mockUser)
+    // Mock login - accept any email/password combination for demo
+    if (email && password) {
+      const userData = {
+        ...mockUser,
+        email,
+        name: email.split('@')[0]
+      }
+      setUser(userData)
       setIsLoggedIn(true)
+      
+      // Save to localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user', JSON.stringify(userData))
+      }
       return true
     }
     return false
@@ -118,6 +129,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     setUser(null)
     setIsLoggedIn(false)
+    
+    // Clear localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user')
+      localStorage.removeItem('rentora_user')
+    }
   }
 
   const updateUser = (updates: Partial<User>) => {
@@ -126,7 +143,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const addToFavorites = (propertyId: number) => {
+  const addToFavorites = (propertyId: string) => {
     if (user && !user.favoriteProperties.includes(propertyId)) {
       setUser({
         ...user,
@@ -135,7 +152,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const removeFromFavorites = (propertyId: number) => {
+  const removeFromFavorites = (propertyId: string) => {
     if (user) {
       setUser({
         ...user,
@@ -144,7 +161,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const addToComparison = (propertyId: number) => {
+  const addToComparison = (propertyId: string) => {
     if (user && !user.comparisonList.includes(propertyId) && user.comparisonList.length < 4) {
       setUser({
         ...user,
@@ -153,7 +170,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const removeFromComparison = (propertyId: number) => {
+  const removeFromComparison = (propertyId: string) => {
     if (user) {
       setUser({
         ...user,
@@ -190,7 +207,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     return []
   }
 
-  const toggleSavedProperty = async (propertyId: number) => {
+  const toggleSavedProperty = async (propertyId: string) => {
     if (user) {
       if (user.savedProperties.includes(propertyId)) {
         setUser({

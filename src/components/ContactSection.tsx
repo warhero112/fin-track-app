@@ -1,36 +1,62 @@
 'use client'
 
-import { useState } from 'react'
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-react'
+import { Phone, Mail, MapPin, Clock, MessageSquare, Users, Globe, Award } from 'lucide-react'
+import { motion } from 'framer-motion'
+import ContactForm from './ContactForm'
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-    propertyType: '',
-    budget: ''
-  })
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const contactInfo = [
+    {
+      icon: Phone,
+      title: 'Phone',
+      details: ['+81-3-1234-5678', '+81-90-1234-5678'],
+      description: 'Call us for immediate assistance'
+    },
+    {
+      icon: Mail,
+      title: 'Email',
+      details: ['info@rentora.jp', 'support@rentora.jp'],
+      description: 'Send us an email anytime'
+    },
+    {
+      icon: MapPin,
+      title: 'Office',
+      details: ['1-2-3 Shibuya, Shibuya-ku', 'Tokyo 150-0002, Japan'],
+      description: 'Visit our main office'
+    },
+    {
+      icon: Clock,
+      title: 'Hours',
+      details: ['Mon-Fri: 9:00 AM - 6:00 PM', 'Sat: 10:00 AM - 4:00 PM'],
+      description: 'We\'re here to help'
+    }
+  ]
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-    setIsSubmitted(true)
-    setTimeout(() => setIsSubmitted(false), 3000)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+  const features = [
+    {
+      icon: Users,
+      title: 'Expert Team',
+      description: 'Our experienced agents know the Japanese real estate market inside and out'
+    },
+    {
+      icon: Globe,
+      title: 'Multilingual Support',
+      description: 'We speak English, Japanese, and other languages to serve international clients'
+    },
+    {
+      icon: Award,
+      title: 'Trusted Service',
+      description: 'Over 15 years of experience helping foreigners find homes in Japan'
+    },
+    {
+      icon: MessageSquare,
+      title: '24/7 Support',
+      description: 'Get help whenever you need it with our round-the-clock customer service'
+    }
+  ]
 
   return (
-    <section className="section-padding bg-gray-50">
+    <section className="py-16 bg-gray-50">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -48,199 +74,125 @@ export default function ContactSection() {
               Contact Information
             </h3>
             
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
-                  <p className="text-gray-600">+81-3-1234-5678</p>
-                  <p className="text-gray-600">+81-90-1234-5678 (Mobile)</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
-                  <p className="text-gray-600">info@rentora.jp</p>
-                  <p className="text-gray-600">support@rentora.jp</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Office</h4>
-                  <p className="text-gray-600">
-                    1-2-3 Shibuya, Shibuya-ku<br />
-                    Tokyo 150-0002, Japan
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Business Hours</h4>
-                  <p className="text-gray-600">Monday - Friday: 9:00 AM - 7:00 PM</p>
-                  <p className="text-gray-600">Saturday: 10:00 AM - 5:00 PM</p>
-                  <p className="text-gray-600">Sunday: Closed</p>
-                </div>
-              </div>
+            <div className="space-y-8">
+              {contactInfo.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex items-start space-x-4"
+                >
+                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                      {item.title}
+                    </h4>
+                    <div className="space-y-1">
+                      {item.details.map((detail, idx) => (
+                        <p key={idx} className="text-gray-600">
+                          {detail}
+                        </p>
+                      ))}
+                    </div>
+                    <p className="text-sm text-gray-500 mt-2">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Quick Contact Buttons */}
-            <div className="mt-8 space-y-4">
-              <button className="w-full btn-primary flex items-center justify-center space-x-2">
-                <Phone className="w-5 h-5" />
-                <span>Call Now</span>
-              </button>
-              <button className="w-full btn-secondary flex items-center justify-center space-x-2">
-                <Mail className="w-5 h-5" />
-                <span>Send Email</span>
-              </button>
+            {/* Features */}
+            <div className="mt-12">
+              <h4 className="text-xl font-semibold text-gray-900 mb-6">
+                Why Choose Us
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={feature.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex items-start space-x-3"
+                  >
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <feature.icon className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-1">
+                        {feature.title}
+                      </h5>
+                      <p className="text-sm text-gray-600">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="card p-8">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-              Send us a Message
+          <div>
+            <ContactForm />
+          </div>
+        </div>
+
+        {/* Additional Information */}
+        <div className="mt-16 bg-white rounded-2xl shadow-lg p-8">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              Frequently Asked Questions
             </h3>
+            <p className="text-gray-600">
+              Here are some common questions we receive from our clients
+            </p>
+          </div>
 
-            {isSubmitted ? (
-              <div className="text-center py-8">
-                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                  Message Sent!
-                </h4>
-                <p className="text-gray-600">
-                  Thank you for your message. We'll get back to you within 24 hours.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="input-field"
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="input-field"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-3">
+                How long does it take to find a property?
+              </h4>
+              <p className="text-gray-600 text-sm">
+                On average, our clients find their perfect home within 2-4 weeks. 
+                We work closely with you to understand your needs and preferences.
+              </p>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="input-field"
-                      placeholder="+81-90-1234-5678"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Property Type
-                    </label>
-                    <select
-                      name="propertyType"
-                      value={formData.propertyType}
-                      onChange={handleChange}
-                      className="input-field"
-                    >
-                      <option value="">Select Property Type</option>
-                      <option value="apartment">Apartment</option>
-                      <option value="house">House</option>
-                      <option value="studio">Studio</option>
-                      <option value="1k">1K</option>
-                      <option value="1dk">1DK</option>
-                      <option value="1ldk">1LDK</option>
-                      <option value="2k">2K</option>
-                      <option value="2dk">2DK</option>
-                      <option value="2ldk">2LDK</option>
-                    </select>
-                  </div>
-                </div>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-3">
+                Do you help with visa requirements?
+              </h4>
+              <p className="text-gray-600 text-sm">
+                While we don't handle visa applications directly, we can connect you 
+                with trusted immigration lawyers who specialize in Japanese visas.
+              </p>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Budget Range
-                  </label>
-                  <select
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                    className="input-field"
-                  >
-                    <option value="">Select Budget Range</option>
-                    <option value="under-50k">Under ¥50,000/month</option>
-                    <option value="50k-100k">¥50,000 - ¥100,000/month</option>
-                    <option value="100k-200k">¥100,000 - ¥200,000/month</option>
-                    <option value="200k-300k">¥200,000 - ¥300,000/month</option>
-                    <option value="300k-500k">¥300,000 - ¥500,000/month</option>
-                    <option value="over-500k">Over ¥500,000/month</option>
-                  </select>
-                </div>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-3">
+                What documents do I need to rent?
+              </h4>
+              <p className="text-gray-600 text-sm">
+                Typically, you'll need your passport, visa, employment contract, 
+                and proof of income. We'll guide you through the entire process.
+              </p>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Message *
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                    className="input-field"
-                    placeholder="Tell us about your requirements, preferred locations, move-in date, etc."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full btn-primary flex items-center justify-center space-x-2"
-                >
-                  <Send className="w-5 h-5" />
-                  <span>Send Message</span>
-                </button>
-              </form>
-            )}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-3">
+                Do you offer property management services?
+              </h4>
+              <p className="text-gray-600 text-sm">
+                Yes! We provide comprehensive property management services including 
+                maintenance, rent collection, and tenant relations.
+              </p>
+            </div>
           </div>
         </div>
       </div>

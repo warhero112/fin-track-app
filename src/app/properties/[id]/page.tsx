@@ -1,6 +1,7 @@
 import PropertyDetailPage from '@/components/PropertyDetailPage'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import propertyService from '@/services/PropertyService'
 
 export const metadata = {
   title: 'Property Details - Rentora | Japan Real Estate for Foreigners',
@@ -10,47 +11,25 @@ export const metadata = {
 export default async function PropertyDetailPageRoute({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   
-  // Mock property data - in real app, fetch from API
-  const property = {
-    id,
-    title: 'Modern Apartment in Shibuya',
-    description: 'Beautiful modern apartment in the heart of Shibuya with excellent transportation access. This stunning 2LDK apartment features a spacious living area, modern kitchen, and private balcony with city views. Perfect for professionals working in central Tokyo.',
-    price: 180000,
-    priceType: 'rent' as const,
-    address: '1-2-3 Shibuya, Shibuya-ku, Tokyo',
-    ward: 'Shibuya-ku',
-    city: 'Tokyo',
-    prefecture: 'Tokyo',
-    images: [
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80'
-    ],
-    layout: '2LDK',
-    bedrooms: 2,
-    bathrooms: 1,
-    area: 45,
-    size_sqm: 45,
-    property_type: 'apartment',
-    furnished: false,
-    pets_allowed: true,
-    has_balcony: true,
-    has_tatami: false,
-    nearest_station: 'Shibuya Station',
-    walk_time_minutes: 5,
-    deposit_amount: 360000,
-    key_money: 180000,
-    agent: {
-      name: 'Yuki Tanaka',
-      phone: '+81-3-1234-5678',
-      email: 'yuki@rentora.jp',
-      rating: 4.8,
-      properties_sold: 156
-    },
-    availability_status: 'available' as const,
-    created_at: '2024-01-15T10:00:00Z',
-    updated_at: '2024-01-15T10:00:00Z'
+  // Load property data from service
+  const property = await propertyService.getPropertyById(id)
+  
+  if (!property) {
+    return (
+      <main className="min-h-screen">
+        <Header />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Property not found</h2>
+            <p className="text-gray-600 mb-4">The property you're looking for doesn't exist.</p>
+            <a href="/properties" className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200">
+              Back to Properties
+            </a>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    )
   }
 
   return (

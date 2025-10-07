@@ -2,41 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { MapPin, Navigation, Maximize2 } from 'lucide-react'
-
-interface Property {
-  id: number
-  title: string
-  location: string
-  ward: string
-  city: string
-  price: number
-  priceType: 'rent' | 'sale'
-  coordinates: [number, number]
-  image: string
-  images: string[]
-  bedrooms: number
-  bathrooms: number
-  area: number
-  rating: number
-  features: string[]
-  available: boolean
-  isFavorite: boolean
-  description: string
-  agent: {
-    name: string
-    phone: string
-    email: string
-    avatar: string
-  }
-  layout: string
-  nearest_station: string
-  walk_time_minutes: number
-  property_type: string
-  furnished: boolean
-  pets_allowed: boolean
-  has_balcony: boolean
-  availability_status: 'available' | 'pending' | 'rented'
-}
+import { Property } from '@/services/PropertyService'
 
 interface PropertyMapProps {
   properties: Property[]
@@ -62,7 +28,7 @@ export default function PropertyMap({
     return () => clearTimeout(timer)
   }, [])
 
-  const formatPrice = (price: number, type: 'rent' | 'sale') => {
+  const formatPrice = (price: number, type: 'rent' | 'buy') => {
     if (type === 'rent') {
       return `¥${price.toLocaleString()}/月`
     } else {
@@ -113,8 +79,8 @@ export default function PropertyMap({
                     : 'hover:scale-110 z-10'
                 }`}
                 style={{
-                  left: `${30 + (property.id * 15) % 60}%`,
-                  top: `${20 + (property.id * 20) % 60}%`
+                  left: `${30 + (parseInt(property.id) * 15) % 60}%`,
+                  top: `${20 + (parseInt(property.id) * 20) % 60}%`
                 }}
               >
                 <div className={`relative ${
