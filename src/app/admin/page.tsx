@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import AdminDashboard from '@/components/AdminDashboard'
+import ModernAdminPanel from '@/components/ModernAdminPanel'
 import { motion } from 'framer-motion'
 
 export default function AdminPage() {
@@ -113,5 +113,5 @@ export default function AdminPage() {
     )
   }
 
-  return <AdminDashboard onLogout={handleLogout} />
+  return <ModernAdminPanel onLogout={handleLogout} />
 }
