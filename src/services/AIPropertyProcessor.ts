@@ -293,7 +293,7 @@ class AIPropertyProcessor {
   // Categorize image type using AI
   private categorizeImage(url: string): 'exterior' | 'interior' | 'kitchen' | 'bathroom' | 'bedroom' | 'living' | 'other' {
     // In real implementation, use image recognition AI
-    const types = ['exterior', 'interior', 'kitchen', 'bathroom', 'bedroom', 'living', 'other']
+    const types: ('exterior' | 'interior' | 'kitchen' | 'bathroom' | 'bedroom' | 'living' | 'other')[] = ['exterior', 'interior', 'kitchen', 'bathroom', 'bedroom', 'living', 'other']
     return types[Math.floor(Math.random() * types.length)]
   }
 

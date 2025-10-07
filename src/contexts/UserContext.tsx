@@ -34,6 +34,7 @@ interface UserContextType {
   clearComparison: () => void
   saveSearch: (searchParams: any) => void
   getSavedSearches: () => any[]
+  toggleSavedProperty: (propertyId: number) => Promise<void>
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
@@ -189,6 +190,22 @@ export function UserProvider({ children }: { children: ReactNode }) {
     return []
   }
 
+  const toggleSavedProperty = async (propertyId: number) => {
+    if (user) {
+      if (user.savedProperties.includes(propertyId)) {
+        setUser({
+          ...user,
+          savedProperties: user.savedProperties.filter(id => id !== propertyId)
+        })
+      } else {
+        setUser({
+          ...user,
+          savedProperties: [...user.savedProperties, propertyId]
+        })
+      }
+    }
+  }
+
   return (
     <UserContext.Provider value={{
       user,
@@ -203,7 +220,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
       removeFromComparison,
       clearComparison,
       saveSearch,
-      getSavedSearches
+      getSavedSearches,
+      toggleSavedProperty
     }}>
       {children}
     </UserContext.Provider>

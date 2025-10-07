@@ -6,7 +6,7 @@ import {
   BarChart3, Users, MessageCircle, Eye, Heart,
   RefreshCw, Play, Pause, Settings, AlertCircle,
   CheckCircle, Clock, TrendingUp, Globe, Zap,
-  ShoppingCart, Tag, Bell, Link, Image as ImageIcon
+  ShoppingCart, Tag, Bell, Link, Image as ImageIcon, X
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FacebookIntegrationService from '@/services/FacebookIntegrationService'

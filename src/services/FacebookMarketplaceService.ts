@@ -42,7 +42,7 @@ export interface MarketplaceConfig {
 
 class FacebookMarketplaceService {
   private config: MarketplaceConfig
-  private isInitialized: boolean = false
+  private initialized: boolean = false
 
   constructor(config: MarketplaceConfig) {
     this.config = config
@@ -59,7 +59,7 @@ class FacebookMarketplaceService {
         throw new Error('Invalid access token or insufficient permissions')
       }
 
-      this.isInitialized = true
+      this.initialized = true
       console.log('Facebook Marketplace service initialized successfully')
       return true
     } catch (error) {
@@ -419,7 +419,7 @@ class FacebookMarketplaceService {
 
   // Get initialization status
   isInitialized(): boolean {
-    return this.isInitialized
+    return this.initialized
   }
 
   // Get configuration

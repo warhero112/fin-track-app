@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { 
   Bot, Database, RefreshCw, TrendingUp, AlertCircle, 
   CheckCircle, Settings, BarChart3, Zap, Globe,
-  Play, Pause, Stop, Activity, Users, Home
+  Play, Pause, Activity, Users, Home, Facebook, Square
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PropertyDataGatherer from '@/services/PropertyDataGatherer'
@@ -12,6 +12,7 @@ import AIPropertyProcessor from '@/services/AIPropertyProcessor'
 import PropertyMatcher from '@/services/PropertyMatcher'
 import DataSyncService from '@/services/DataSyncService'
 import AIRecommendationEngine from '@/services/AIRecommendationEngine'
+import FacebookIntegrationPanel from '@/components/FacebookIntegrationPanel'
 
 interface ModernAdminPanelProps {
   onLogout: () => void
@@ -22,6 +23,7 @@ export default function ModernAdminPanel({ onLogout }: ModernAdminPanelProps) {
   const [isDataGathering, setIsDataGathering] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
+  const [showFacebookPanel, setShowFacebookPanel] = useState(false)
   const [stats, setStats] = useState({
     totalProperties: 0,
     processedProperties: 0,
@@ -100,6 +102,7 @@ export default function ModernAdminPanel({ onLogout }: ModernAdminPanelProps) {
     { id: 'ai-processing', label: 'AI Processing', icon: Bot, color: 'purple' },
     { id: 'sync', label: 'Sync & Updates', icon: RefreshCw, color: 'orange' },
     { id: 'recommendations', label: 'Recommendations', icon: TrendingUp, color: 'pink' },
+    { id: 'facebook', label: 'Facebook Integration', icon: Facebook, color: 'indigo' },
     { id: 'settings', label: 'Settings', icon: Settings, color: 'gray' }
   ]
 
@@ -287,7 +290,7 @@ export default function ModernAdminPanel({ onLogout }: ModernAdminPanelProps) {
               </button>
               
               <button className="w-full bg-red-100 text-red-700 py-3 px-4 rounded-xl hover:bg-red-200 transition-colors duration-200 flex items-center justify-center space-x-2">
-                <Stop className="w-4 h-4" />
+                <Square className="w-4 h-4" />
                 <span>Stop Gathering</span>
               </button>
             </div>
@@ -500,6 +503,54 @@ export default function ModernAdminPanel({ onLogout }: ModernAdminPanelProps) {
       case 'ai-processing': return renderAIProcessing()
       case 'sync': return renderSync()
       case 'recommendations': return renderRecommendations()
+      case 'facebook': return (
+        <div className="p-8">
+          <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900">Facebook Integration</h3>
+                <p className="text-gray-600">Manage your Facebook page integration and automated posting</p>
+              </div>
+              <button
+                onClick={() => setShowFacebookPanel(true)}
+                className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors duration-200 flex items-center space-x-2"
+              >
+                <Facebook className="w-4 h-4" />
+                <span>Open Facebook Panel</span>
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-4 bg-indigo-50 rounded-xl">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-indigo-900">Auto Posting</span>
+                  <Facebook className="w-4 h-4 text-indigo-600" />
+                </div>
+                <div className="text-2xl font-bold text-indigo-900">Active</div>
+                <div className="text-sm text-indigo-600">Properties auto-posted to Facebook</div>
+              </div>
+              
+              <div className="p-4 bg-green-50 rounded-xl">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-green-900">Marketplace</span>
+                  <Globe className="w-4 h-4 text-green-600" />
+                </div>
+                <div className="text-2xl font-bold text-green-900">24</div>
+                <div className="text-sm text-green-600">Active marketplace listings</div>
+              </div>
+              
+              <div className="p-4 bg-purple-50 rounded-xl">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-purple-900">Engagement</span>
+                  <TrendingUp className="w-4 h-4 text-purple-600" />
+                </div>
+                <div className="text-2xl font-bold text-purple-900">1.2K</div>
+                <div className="text-sm text-purple-600">Monthly Facebook engagement</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
       case 'settings': return <div className="p-8 text-center text-gray-500">Settings coming soon...</div>
       default: return renderDashboard()
     }
@@ -572,6 +623,11 @@ export default function ModernAdminPanel({ onLogout }: ModernAdminPanelProps) {
           </motion.div>
         </div>
       </div>
+
+      {/* Facebook Integration Panel Modal */}
+      {showFacebookPanel && (
+        <FacebookIntegrationPanel onClose={() => setShowFacebookPanel(false)} />
+      )}
     </div>
   )
 }

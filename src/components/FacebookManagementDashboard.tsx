@@ -5,7 +5,7 @@ import {
   Facebook, Share2, Download, Upload, Calendar, 
   BarChart3, Users, MessageCircle, Eye, Heart,
   RefreshCw, Play, Pause, Settings, AlertCircle,
-  CheckCircle, Clock, TrendingUp, Globe, Zap
+  CheckCircle, Clock, TrendingUp, Globe, Zap, X
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FacebookIntegrationService from '@/services/FacebookIntegrationService'
@@ -310,7 +310,7 @@ export default function FacebookManagementDashboard({ onClose }: FacebookManagem
               placeholder="🏠 {title} - {price} - {location} #RealEstate #Japan"
             />
             <p className="text-sm text-gray-500 mt-2">
-              Use {title}, {price}, {location}, {bedrooms}, {bathrooms} as placeholders
+              Use {'{title}'}, {'{price}'}, {'{location}'}, {'{bedrooms}'}, {'{bathrooms}'} as placeholders
             </p>
           </div>
 

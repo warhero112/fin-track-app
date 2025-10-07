@@ -165,9 +165,9 @@ class DataSyncService {
   // Sync data from all sources
   private async syncFromSources(): Promise<void> {
     const sources = [
-      { name: 'Suumo', status: 'active' as const, lastUpdate: new Date(), propertiesCount: 150 },
-      { name: 'Homes', status: 'active' as const, lastUpdate: new Date(), propertiesCount: 120 },
-      { name: 'AtHome', status: 'active' as const, lastUpdate: new Date(), propertiesCount: 80 }
+      { name: 'Suumo', status: 'active' as 'active' | 'inactive' | 'error', lastUpdate: new Date(), propertiesCount: 150 },
+      { name: 'Homes', status: 'active' as 'active' | 'inactive' | 'error', lastUpdate: new Date(), propertiesCount: 120 },
+      { name: 'AtHome', status: 'active' as 'active' | 'inactive' | 'error', lastUpdate: new Date(), propertiesCount: 80 }
     ]
 
     for (const source of sources) {

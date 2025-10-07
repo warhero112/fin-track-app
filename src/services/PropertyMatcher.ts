@@ -232,8 +232,8 @@ class PropertyMatcher {
     const set1 = new Set(text1.split(' '))
     const set2 = new Set(text2.split(' '))
     
-    const intersection = new Set([...set1].filter(x => set2.has(x)))
-    const union = new Set([...set1, ...set2])
+    const intersection = new Set(Array.from(set1).filter(x => set2.has(x)))
+    const union = new Set([...Array.from(set1), ...Array.from(set2)])
     
     return intersection.size / union.size
   }
@@ -302,7 +302,7 @@ class PropertyMatcher {
   private dotProduct(vector1: Map<string, number>, vector2: Map<string, number>): number {
     let dotProduct = 0
 
-    for (const [word, count] of vector1) {
+    for (const [word, count] of Array.from(vector1.entries())) {
       if (vector2.has(word)) {
         dotProduct += count * (vector2.get(word) || 0)
       }
@@ -315,7 +315,7 @@ class PropertyMatcher {
   private magnitude(vector: Map<string, number>): number {
     let sum = 0
 
-    for (const count of vector.values()) {
+    for (const count of Array.from(vector.values())) {
       sum += count * count
     }
 
