@@ -20,6 +20,7 @@ export default function Header() {
     { name: t('nav.about'), href: '/about' },
     { name: t('nav.services'), href: '/services' },
     { name: t('nav.contact'), href: '/contact' },
+    { name: 'Admin', href: '/admin' },
   ]
 
   return (
