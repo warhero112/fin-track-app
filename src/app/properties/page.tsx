@@ -1,5 +1,5 @@
-import WorkingPropertySearch from '@/components/WorkingPropertySearch'
-import Header from '@/components/Header'
+import ModernSearchInterface from '@/components/ModernSearchInterface'
+import ModernHeader from '@/components/ModernHeader'
 import Footer from '@/components/Footer'
 
 export const metadata = {
@@ -10,8 +10,12 @@ export const metadata = {
 export default function PropertiesPage() {
   return (
     <main className="min-h-screen">
-      <Header />
-      <WorkingPropertySearch showFilters={true} showViewToggle={true} />
+      <ModernHeader />
+      <div className="pt-16">
+        <div className="container-padding py-16">
+          <ModernSearchInterface showFilters={true} showViewToggle={true} />
+        </div>
+      </div>
       <Footer />
     </main>
   )

@@ -1,5 +1,5 @@
-import WorkingContactForm from '@/components/WorkingContactForm'
-import Header from '@/components/Header'
+import ModernContactForm from '@/components/ModernContactForm'
+import ModernHeader from '@/components/ModernHeader'
 import Footer from '@/components/Footer'
 
 export const metadata = {
@@ -10,8 +10,12 @@ export const metadata = {
 export default function ContactPageRoute() {
   return (
     <main className="min-h-screen">
-      <Header />
-      <WorkingContactForm />
+      <ModernHeader />
+      <div className="pt-16">
+        <div className="container-padding py-20">
+          <ModernContactForm />
+        </div>
+      </div>
       <Footer />
     </main>
   )
