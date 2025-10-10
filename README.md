@@ -2,6 +2,35 @@
 
 A modern, comprehensive real estate website designed specifically for foreigners looking to find homes in Japan. Built with Next.js, TypeScript, and Tailwind CSS.
 
+---
+
+## 🆕 NEW: FinTrack Personal Finance App!
+
+**A beautiful personal finance management app with stunning 3D globe animations is now included!**
+
+### 🚀 Quick Start:
+```bash
+npm run dev
+```
+
+**Then visit:**
+- 💰 **FinTrack App:** http://localhost:3000/fintrack
+- 🌍 **Globe Demo:** http://localhost:3000/demo
+
+👉 **See [START_HERE.md](START_HERE.md) for complete guide!**
+
+### ✨ FinTrack Features:
+- 🌍 3D Rotating Earth with 24 orbiting currencies
+- 📊 Complete finance tracking (income, expenses, budget)
+- 🎯 Goal management with visual progress
+- 💡 Smart AI-powered insights
+- 🤖 AI Financial Advisor chatbot
+- 🌙 Dark mode support
+- 🌐 6 languages & 6 currencies
+- 🔒 100% private (all data local)
+
+---
+
 ## Features
 
 - 🏠 **Property Search & Listings** - Advanced search with filters for location, price, property type, and amenities
