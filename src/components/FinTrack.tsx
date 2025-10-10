@@ -138,6 +138,10 @@ const FinTrack: React.FC = () => {
   const [savingSettings, setSavingSettings] = useState(false);
   const [settingsSaved, setSettingsSaved] = useState(false);
   const [currentInsightIndex, setCurrentInsightIndex] = useState(0);
+  
+  // Loading and Refresh States
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // AI Chat State
   const [aiMessages, setAiMessages] = useState<ChatMessage[]>([
@@ -436,6 +440,16 @@ const FinTrack: React.FC = () => {
     setSettings((prev) => ({ ...prev, darkMode: !prev.darkMode }));
   };
 
+  // Refresh data function
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+  };
+
+  const handleRefreshComplete = () => {
+    setIsRefreshing(false);
+    // Optionally reload data here
+  };
+
   // AI Functions
   const handleAIMessage = async () => {
     if (!aiInput.trim()) return;
@@ -533,6 +547,12 @@ const FinTrack: React.FC = () => {
           </p>
         </div>
         <div className="flex gap-2">
+          <button
+            onClick={handleRefresh}
+            className="p-3 bg-white/20 hover:bg-white/30 rounded-full transition"
+          >
+            <RefreshCw size={20} className="text-white" />
+          </button>
           <button
             onClick={toggleDarkMode}
             className="p-3 bg-white/20 hover:bg-white/30 rounded-full transition"
@@ -1336,6 +1356,10 @@ const FinTrack: React.FC = () => {
   );
 
   // Main render
+  if (isLoading) {
+    return <LoadingScreen message="Loading FinTrack..." size={300} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {activeTab === 0 && <DashboardScreen />}
@@ -1347,6 +1371,14 @@ const FinTrack: React.FC = () => {
       <BottomNav />
       <AddTransactionSheet />
       <AddGoalModal />
+      
+      {isRefreshing && (
+        <RefreshScreen
+          message="Syncing your finances..."
+          duration={2000}
+          onComplete={handleRefreshComplete}
+        />
+      )}
     </div>
   );
 };
